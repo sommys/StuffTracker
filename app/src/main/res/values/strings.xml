@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">StuffTracker</string>
+    <string name="addresses">CÍMEK</string>
+    <string name="categories">KATEGÓRIÁK</string>
+    <string name="pin">PIN:</string>
+    <string name="login">LOGIN</string>
+    <string name="name">NÉV</string>
+    <string name="address">CÍM</string>
+    <string name="stuff_data">Dolog Jelenlegi Adatai</string>
+    <string name="oldpin">Régi PIN:</string>
+    <string name="newpin">Új PIN:</string>
+    <string name="cancel">MÉGSE</string>
+    <string name="save">MENTÉS</string>
+    <string name="category">KATEGÓRIA</string>
+    <string name="zip">Irányítószám:</string>
+    <string name="city">Város:</string>
+    <string name="country">Ország:</string>
+    <string name="street">Közterület:</string>
+    <string name="streetNum">Házszám:</string>
+    <string name="alias">Becenév:</string>
+    <string name="quantity">Mennyiség:</string>
+    <string name="desc">Megjegyzés:</string>
+    <string name="quantityPlaceholder">DB</string>
+    <string name="manage_addresses_menuitem">Manage Addresses</string>
+    <string name="manage_categories_menuitem">Manage Categories</string>
+    <string name="change_pin_menuitem">Change PIN</string>
+</resources>

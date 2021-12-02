@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/manageAddressMenuItem"
+        android:title="@string/manage_addresses_menuitem"/>
+    <item android:id="@+id/manageCategoryMenuItem"
+        android:title="@string/manage_categories_menuitem"/>
+    <item android:id="@+id/changePINMenuItem"
+        android:title="@string/change_pin_menuitem"/>
+</menu>

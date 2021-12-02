@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgStuff"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.4"
+        app:layout_constraintDimensionRatio="1:1"
+        tools:srcCompat="@tools:sample/avatars"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"/>
+
+    <TextView
+        android:id="@+id/stuffDataLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/stuff_data"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintStart_toEndOf="@id/imgStuff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imgStuff"
+        android:layout_marginHorizontal="16dp"/>
+
+    <TextView
+        android:id="@+id/stuffNameTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Dolog Neve"
+        android:textAlignment="center"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintStart_toEndOf="@id/imgStuff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stuffDataLabel"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <TextView
+        android:id="@+id/stuffAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintWidth_percent="0.5"
+        android:text="Dolog Címe"
+        app:layout_constraintStart_toEndOf="@id/imgStuff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stuffNameTv"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <TextView
+        android:id="@+id/addressSpinnerLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintWidth_percent="0.5"
+        android:text="Válaszd ki az új címet!"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgStuff"
+        app:layout_constraintTop_toBottomOf="@id/stuffAddress"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <TextView
+        android:id="@+id/noAddressTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintWidth_percent="0.5"
+        android:text="Nincs másik cím felvéve..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgStuff"
+        app:layout_constraintTop_toBottomOf="@id/addressSpinnerLabel"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:visibility="gone"/>
+
+    <Spinner
+        android:id="@+id/addressSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgStuff"
+        app:layout_constraintTop_toBottomOf="@id/addressSpinnerLabel"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
