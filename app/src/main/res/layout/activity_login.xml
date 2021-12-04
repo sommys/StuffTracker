@@ -6,35 +6,212 @@
     android:layout_height="match_parent"
     tools:context=".activity.LoginActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="top|end"
+        android:layout_margin="4dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_baseline_help_24" />
+
     <TextView
         android:id="@+id/pinLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pin"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:layout_marginVertical="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/pinEt" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
         android:id="@+id/pinEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="4"
+        android:textSize="36sp"
         android:inputType="numberPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:focusable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/pinLabel" />
+
+    <LinearLayout
+        android:id="@+id/pinPAD"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="4"
+        android:orientation="vertical"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <LinearLayout
+            android:id="@+id/topRow"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginVertical="4dp">
+            <Button
+                android:id="@+id/one"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="4dp"
+                android:text="1"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/two"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="4dp"
+                android:text="2"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/three"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="4dp"
+                android:text="3"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/midRow"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginVertical="4dp">
+            <Button
+                android:id="@+id/four"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="4"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/five"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="5"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/six"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="6"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/bottomRow"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginVertical="4dp">
+            <Button
+                android:id="@+id/seven"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="7"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/eight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="8"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/nine"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="9"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/clearRow"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginVertical="4dp">
+            <ImageButton
+                android:id="@+id/clearPIN"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="4dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_baseline_backspace_50"
+                android:backgroundTint="@color/purple_500"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/zero"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="4dp"
+                android:text="0"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="4dp"
+                android:src="@drawable/ic_baseline_clear_50"
+                android:scaleType="fitCenter"
+                android:backgroundTint="@color/purple_500"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/teal_700"
+        app:layout_constraintHeight_percent="0.2"
         android:text="@string/login"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pinEt" />
+        app:layout_constraintTop_toBottomOf="@id/pinPAD" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

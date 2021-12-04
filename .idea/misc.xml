@@ -3,22 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/drawable/custom_border_bg.xml" value="0.12368421052631579" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/activity_address_manager.xml" value="0.1" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/activity_category_manager.xml" value="0.1" />
-        <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/activity_login.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/activity_main.xml" value="0.10144927536231885" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/address_item.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/address_spinner.xml" value="0.1" />
-        <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/category_item.xml" value="0.22" />
+        <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/category_item.xml" value="0.1" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/category_spinner.xml" value="0.1" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/change_address_dialog.xml" value="0.36807817589576547" />
-        <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/changepin_dialog.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/changepin_dialog.xml" value="0.1" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/fragment_address.xml" value="0.1" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/menu_main.xml" value="0.1" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/new_address_dialog.xml" value="0.1" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/new_category_dialog.xml" value="0.1" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/new_stuff_dialog.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/stuff_item.xml" value="0.2" />
+        <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/layout/stuff_item.xml" value="0.22" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/mipmap-anydpi-v26/ic_launcher_soma.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/Soma/AndroidStudioProjects/StuffStracker/app/src/main/res/xml/provider_paths.xml" value="0.1299342105263158" />
       </map>

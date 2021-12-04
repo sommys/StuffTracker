@@ -37,9 +37,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category"
-        app:layout_constraintTop_toBottomOf="@id/catSpinner"
-        app:layout_constraintEnd_toEndOf="@+id/descLabel"
-        app:layout_constraintTop_toTopOf="@id/catSpinner" />
+        app:layout_constraintTop_toBottomOf="@id/descEt"
+        app:layout_constraintEnd_toEndOf="@+id/descLabel" />
 
     <EditText
         android:id="@+id/nameEt"
@@ -74,10 +73,12 @@
 
     <Spinner
         android:id="@+id/catSpinner"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/categoryLabel"
-        app:layout_constraintTop_toBottomOf="@id/descEt" />
+        app:layout_constraintTop_toTopOf="@id/categoryLabel"
+        app:layout_constraintBottom_toBottomOf="@id/categoryLabel"
+        android:background="@drawable/custom_border_bg"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,7 +44,6 @@ class NewStuffDialog(var address: MyAddress, var existingStuff: Stuff?, var list
         existingStuff!!.name = binding.nameEt.text.toString()
         existingStuff!!.quantity = parseInt(binding.quantityEt.text.toString())
         existingStuff!!.description = binding.descEt.text.toString()
-        existingStuff!!.imageURL = null
         existingStuff!!.addressId = address.id
         existingStuff!!.categoryId = (binding.catSpinner.selectedItem as Category).id
         return existingStuff!!

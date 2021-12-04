@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/oldPINLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/oldpin"
+        android:layout_marginVertical="16dp"
         app:layout_constraintBottom_toTopOf="@+id/newPINLabel"
         app:layout_constraintEnd_toStartOf="@id/oldPINEt"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,15 +19,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/newpin"
+        android:layout_marginVertical="16dp"
         app:layout_constraintEnd_toStartOf="@id/newPINEt"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/oldPINLabel" />
+
+    <TextView
+        android:id="@+id/reminderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reminder"
+        android:layout_marginVertical="16dp"
+        app:layout_constraintEnd_toEndOf="@id/newPINLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newPINLabel"/>
 
     <EditText
         android:id="@+id/oldPINEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:ems="4"
         android:inputType="numberPassword"
         app:layout_constraintBottom_toBottomOf="@+id/oldPINLabel"
@@ -39,7 +48,6 @@
         android:id="@+id/newPINEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:ems="4"
         android:inputType="numberPassword"
         app:layout_constraintBottom_toBottomOf="@+id/newPINLabel"
@@ -47,24 +55,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/newPINLabel" />
 
-    <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/reminderEt"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:inputType="text"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPINEt" />
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnCancel"
-        app:layout_constraintTop_toBottomOf="@+id/newPINEt" />
+        app:layout_constraintStart_toEndOf="@id/reminderLabel"
+        app:layout_constraintTop_toTopOf="@id/reminderLabel"
+        app:layout_constraintBottom_toBottomOf="@id/reminderLabel"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
