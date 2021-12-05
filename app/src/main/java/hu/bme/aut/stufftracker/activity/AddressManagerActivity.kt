@@ -47,8 +47,8 @@ class AddressManagerActivity : AppCompatActivity(), AddressListAdapter.AddressIt
 
     override fun onItemDeleted(item: MyAddress) {
         thread{
-            db.myAddressDAO().deleteItem(item)
             db.stuffDAO().deleteAddress(item.id!!)
+            db.myAddressDAO().deleteItem(item)
             runOnUiThread {
                 addressListAdapter.deleteItem(item)
             }

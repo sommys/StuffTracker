@@ -2,7 +2,6 @@ package hu.bme.aut.stufftracker.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,6 @@ import hu.bme.aut.stufftracker.adapter.CategorySpinnerAdapter
 import hu.bme.aut.stufftracker.adapter.StuffListAdapter
 import hu.bme.aut.stufftracker.data.StuffDatabase
 import hu.bme.aut.stufftracker.databinding.FragmentAddressBinding
-import hu.bme.aut.stufftracker.dialog.NewAddressDialog
-import hu.bme.aut.stufftracker.dialog.NewCategoryDialog
 import hu.bme.aut.stufftracker.dialog.NewStuffDialog
 import hu.bme.aut.stufftracker.domain.Category
 import hu.bme.aut.stufftracker.domain.MyAddress
@@ -38,40 +35,10 @@ class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(
         stuffListAdapter = StuffListAdapter(address, this, requireActivity().supportFragmentManager, requireActivity() as MainActivity)
         binding.rv.adapter = stuffListAdapter
         binding.rv.layoutManager = LinearLayoutManager(requireContext())
-        categories.add(Category("MINDEN"))
-        thread{
-            var catList = db.categoryDAO().getAll()
-            categories.addAll(catList)
-            requireActivity().runOnUiThread {
-                spinnerAdapter = CategorySpinnerAdapter(mContext, R.layout.category_spinner, categories)
-                binding.categorySpinner.adapter = spinnerAdapter
-                binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        c = spinnerAdapter.getItem(position)
-                        thread {
-                            if(c.name == "MINDEN"){
-                                var stuffList = db.stuffDAO()
-                                    .getStuffWithAddress(address.id!!)
-                                requireActivity().runOnUiThread {
-                                    stuffListAdapter.update(stuffList)
-                                }
-                            } else {
-                                var stuffList = db.stuffDAO()
-                                    .getStuffWithAddressAndCategory(address.id!!, c.id!!)
-                                requireActivity().runOnUiThread {
-                                    stuffListAdapter.update(stuffList)
-                                }
-                            }
-                        }
-                    }
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                }
-                binding.fabAddStuff.setOnClickListener {
-                    var dialog = NewStuffDialog(address, null, this)
-                    dialog.show(parentFragmentManager, "NEWSTUFF_DIALOG")
-                }
-            }
+        binding.fabAddStuff.setOnClickListener {
+            var dialog = NewStuffDialog(address, null, this)
+            dialog.show(parentFragmentManager, "NEWSTUFF_DIALOG")
         }
 
         return binding.root
@@ -79,6 +46,49 @@ class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        categories.clear()
+        categories.add(Category("MINDEN"))
+        thread {
+            var catList = db.categoryDAO().getAll()
+            categories.addAll(catList)
+            requireActivity().runOnUiThread {
+                spinnerAdapter =
+                    CategorySpinnerAdapter(mContext, R.layout.category_spinner, categories)
+                binding.categorySpinner.adapter = spinnerAdapter
+                binding.categorySpinner.onItemSelectedListener =
+                    object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            c = spinnerAdapter.getItem(position)
+                            thread {
+                                if (c.name == "MINDEN") {
+                                    var stuffList = db.stuffDAO()
+                                        .getStuffWithAddress(address.id!!)
+                                    requireActivity().runOnUiThread {
+                                        stuffListAdapter.update(stuffList)
+                                    }
+                                } else {
+                                    var stuffList = db.stuffDAO()
+                                        .getStuffWithAddressAndCategory(address.id!!, c.id!!)
+                                    requireActivity().runOnUiThread {
+                                        stuffListAdapter.update(stuffList)
+                                    }
+                                }
+                            }
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    }
+            }
+        }
     }
 
     override fun onStuffCreated(newItem: Stuff) {

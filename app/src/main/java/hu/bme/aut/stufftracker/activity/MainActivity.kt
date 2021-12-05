@@ -39,6 +39,12 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         db = StuffDatabase.getDatabase(this)
+
+        setContentView(binding.root)
+    }
+
+    override fun onStart() {
+        super.onStart()
         addressPagerAdapter = AddressPagerAdapter(supportFragmentManager)
         thread{
             val addrList = db.myAddressDAO().getAll()
@@ -49,7 +55,6 @@ class MainActivity : AppCompatActivity(){
                 binding.addressPager.adapter = addressPagerAdapter
             }
         }
-        setContentView(binding.root)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -103,10 +108,12 @@ class MainActivity : AppCompatActivity(){
             latestStuff!!.imageURL = currentPhotoPath
             thread{
                 db.stuffDAO().update(latestStuff!!)
+                runOnUiThread{
+                    Glide.with(this).load(currentPhotoPath).centerCrop().into(latestHolder!!.binding.img)
+                    latestHolder!!.binding.img.visibility = View.VISIBLE
+                    latestHolder!!.binding.btnAddImage.visibility = View.GONE
+                }
             }
-            Glide.with(this).load(currentPhotoPath).centerCrop().into(latestHolder!!.binding.img)
-            latestHolder!!.binding.img.visibility = View.VISIBLE
-            latestHolder!!.binding.btnAddImage.visibility = View.GONE
         }
     }
 

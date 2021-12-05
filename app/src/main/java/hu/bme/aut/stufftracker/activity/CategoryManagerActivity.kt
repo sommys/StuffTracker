@@ -46,8 +46,8 @@ class CategoryManagerActivity : AppCompatActivity(), CategoryListAdapter.Categor
 
     override fun onItemDeleted(item: Category) {
         thread{
-            db.categoryDAO().deleteItem(item)
             db.stuffDAO().deleteCategory(item.id!!)
+            db.categoryDAO().deleteItem(item)
             runOnUiThread {
                 categoryListAdapter.deleteItem(item)
             }
