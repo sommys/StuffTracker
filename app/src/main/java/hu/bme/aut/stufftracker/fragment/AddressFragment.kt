@@ -121,7 +121,8 @@ class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(
         thread{
             db.stuffDAO().deleteItem(item)
             requireActivity().runOnUiThread {
-                stuffListAdapter.deleteItem(item);
+                stuffListAdapter.deleteItem(item)
+                //todo kep kitorlese tarhelyrol
             }
         }
     }

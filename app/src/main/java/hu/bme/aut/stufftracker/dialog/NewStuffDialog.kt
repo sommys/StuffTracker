@@ -16,7 +16,7 @@ import hu.bme.aut.stufftracker.domain.MyAddress
 import hu.bme.aut.stufftracker.domain.Stuff
 import java.lang.Integer.parseInt
 import kotlin.concurrent.thread
-
+//TODO fix item torles utan uj felvetelekor a kep attoltodik vmiert??
 class NewStuffDialog(var address: MyAddress, var existingStuff: Stuff?, var listener: NewStuffDialogListener): DialogFragment() {
     private lateinit var binding: NewStuffDialogBinding
     private lateinit var db: StuffDatabase
@@ -28,8 +28,7 @@ class NewStuffDialog(var address: MyAddress, var existingStuff: Stuff?, var list
 
     private fun isValid() =
         binding.nameEt.text.isNotEmpty() &&
-        binding.quantityEt.text.isDigitsOnly() && binding.quantityEt.text.isNotEmpty() &&
-        binding.descEt.text.isNotEmpty()
+        binding.quantityEt.text.isDigitsOnly() && binding.quantityEt.text.isNotEmpty()
 
     private fun getStuff() = Stuff(
         name = binding.nameEt.text.toString(),

@@ -26,7 +26,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
-
+//TODO all around DB kezeles atgondolasa + javitasa
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
     private lateinit var addressPagerAdapter: AddressPagerAdapter
@@ -117,6 +117,7 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
+    //todo kepmeret csokkentese
     fun takePicture(holder: StuffListAdapter.StuffViewHolder, s: Stuff) {
         latestHolder = holder
         latestStuff = s

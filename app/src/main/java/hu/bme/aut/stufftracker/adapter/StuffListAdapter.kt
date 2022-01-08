@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import hu.bme.aut.stufftracker.activity.MainActivity
 import hu.bme.aut.stufftracker.databinding.StuffItemBinding
 import hu.bme.aut.stufftracker.dialog.ChangeAddressDialog
+import hu.bme.aut.stufftracker.dialog.DeleteConfirmDialog
 import hu.bme.aut.stufftracker.dialog.NewStuffDialog
 import hu.bme.aut.stufftracker.domain.MyAddress
 import hu.bme.aut.stufftracker.domain.Stuff
@@ -36,7 +37,8 @@ class StuffListAdapter(private val address: MyAddress, private val listener: Stu
             dialog.show(fragmentManager, "NEWSTUFF_DIALOG")
         }
         holder.binding.btnDeleteStuff.setOnClickListener {
-            listener.onItemDeleted(s)
+            val dialog = DeleteConfirmDialog(s, listener)
+            dialog.show(fragmentManager, "DELETECONFIRM_DIALOG")
         }
         holder.binding.btnAddImage.setOnClickListener {
             activity.takePicture(holder, s)
