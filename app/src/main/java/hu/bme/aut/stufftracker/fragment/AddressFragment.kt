@@ -20,7 +20,7 @@ import hu.bme.aut.stufftracker.domain.MyAddress
 import hu.bme.aut.stufftracker.domain.Stuff
 import kotlin.concurrent.thread
 
-class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(), NewStuffDialog.NewStuffDialogListener, StuffListAdapter.StuffItemListener{
+class AddressFragment(var address : MyAddress, var mContext: Context, var activity: MainActivity): Fragment(), NewStuffDialog.NewStuffDialogListener, StuffListAdapter.StuffItemListener{
     private lateinit var binding: FragmentAddressBinding
     private var categories:ArrayList<Category> = ArrayList()
     private var db = StuffDatabase.getDatabase(mContext)
@@ -32,20 +32,15 @@ class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAddressBinding.inflate(inflater, container, false)
         binding.addressTv.text = address.toString()
-        stuffListAdapter = StuffListAdapter(address, this, requireActivity().supportFragmentManager, requireActivity() as MainActivity)
+        stuffListAdapter = StuffListAdapter(address, this, activity.supportFragmentManager, activity)
         binding.rv.adapter = stuffListAdapter
-        binding.rv.layoutManager = LinearLayoutManager(requireContext())
+        binding.rv.layoutManager = LinearLayoutManager(mContext)
 
         binding.fabAddStuff.setOnClickListener {
             var dialog = NewStuffDialog(address, null, this)
             dialog.show(parentFragmentManager, "NEWSTUFF_DIALOG")
         }
-
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onStart() {
@@ -55,7 +50,7 @@ class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(
         thread {
             var catList = db.categoryDAO().getAll()
             categories.addAll(catList)
-            requireActivity().runOnUiThread {
+            activity.runOnUiThread {
                 spinnerAdapter =
                     CategorySpinnerAdapter(mContext, R.layout.category_spinner, categories)
                 binding.categorySpinner.adapter = spinnerAdapter
@@ -72,13 +67,13 @@ class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(
                                 if (c.name == "MINDEN") {
                                     var stuffList = db.stuffDAO()
                                         .getStuffWithAddress(address.id!!)
-                                    requireActivity().runOnUiThread {
+                                    activity.runOnUiThread {
                                         stuffListAdapter.update(stuffList)
                                     }
                                 } else {
                                     var stuffList = db.stuffDAO()
                                         .getStuffWithAddressAndCategory(address.id!!, c.id!!)
-                                    requireActivity().runOnUiThread {
+                                    activity.runOnUiThread {
                                         stuffListAdapter.update(stuffList)
                                     }
                                 }
@@ -104,13 +99,13 @@ class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(
             if(c.name == "MINDEN"){
                 var stuffList = db.stuffDAO()
                     .getStuffWithAddress(address.id!!)
-                requireActivity().runOnUiThread {
+                activity.runOnUiThread {
                     stuffListAdapter.update(stuffList)
                 }
             } else {
                 var stuffList = db.stuffDAO()
                     .getStuffWithAddressAndCategory(address.id!!, c.id!!)
-                requireActivity().runOnUiThread {
+                activity.runOnUiThread {
                     stuffListAdapter.update(stuffList)
                 }
             }
@@ -120,9 +115,13 @@ class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(
     override fun onItemDeleted(item: Stuff) {
         thread{
             db.stuffDAO().deleteItem(item)
-            requireActivity().runOnUiThread {
+            activity.runOnUiThread {
                 stuffListAdapter.deleteItem(item)
-                //todo kep kitorlese tarhelyrol
+                /**
+                 * todo törléskor kép fizikai törlése is, ne maradjon ott szemét
+                 * esetleg futhatna leálláskor egy takarító algoritmus, ami a nem használt képeket kigyepálja
+                 * ezzel megelőzhető lenne a véletlen felvett és nem rögzített szemetek elszaporodása is
+                 */
             }
         }
     }
@@ -150,21 +149,16 @@ class AddressFragment(var address : MyAddress, var mContext: Context): Fragment(
             if(c.name == "MINDEN"){
                 var stuffList = db.stuffDAO()
                     .getStuffWithAddress(address.id!!)
-                requireActivity().runOnUiThread {
+                activity.runOnUiThread {
                     stuffListAdapter.update(stuffList)
                 }
             } else {
                 var stuffList = db.stuffDAO().getStuffWithAddressAndCategory(address.id!!, c.id!!)
-                requireActivity().runOnUiThread {
+                activity.runOnUiThread {
                     stuffListAdapter.update(stuffList)
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        db.close()
-        super.onDestroy()
     }
 
     override fun onStuffAddressModified(item: Stuff) {

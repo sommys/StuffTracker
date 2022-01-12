@@ -21,14 +21,14 @@ class CategoryListAdapter(private val listener: CategoryItemListener, private va
         var cat = categoryList[position]
         holder.binding.nameTv.text = cat.name?.uppercase() ?: ""
         holder.binding.btnEditCategory.setOnClickListener {
-            var dialog = NewCategoryDialog(cat)
+            var dialog = NewCategoryDialog(cat, this)
             dialog.show(fragmentManager, "NEWCATEGORY_DIALOG")
         }
         holder.binding.btnDeleteCategory.setOnClickListener {
             var confirmDeleteDialog = AlertDialog.Builder(listener as Context)
             confirmDeleteDialog.setTitle("A kategória törlésével a benne lévő dolgok is törlődnek. Biztosan törli?");
             confirmDeleteDialog.setPositiveButton("Törlés"){_,_->
-                listener.onItemDeleted(cat)
+                listener.onCategoryDeleted(cat, this)
             }
             confirmDeleteDialog.setNegativeButton("Mégsem", null)
             confirmDeleteDialog.create().show()
@@ -55,7 +55,7 @@ class CategoryListAdapter(private val listener: CategoryItemListener, private va
     }
 
     interface CategoryItemListener{
-        fun onItemDeleted(item: Category)
+        fun onCategoryDeleted(item: Category, categoryListAdapter: CategoryListAdapter)
     }
 
     inner class CategoryViewHolder(val binding: CategoryItemBinding) :RecyclerView.ViewHolder(binding.root)

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/mainStuffFragment">
+
+    <fragment
+        android:id="@+id/mainStuffFragment"
+        android:name="hu.bme.aut.stufftracker.fragment.MainStuffFragment"
+        android:label="MainStuffFragment" >
+        <action
+            android:id="@+id/mainStuff_to_addressManager"
+            app:destination="@id/addressManagerFragment" />
+        <action
+            android:id="@+id/mainStuff_to_categoryManager"
+            app:destination="@id/categoryManagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressManagerFragment"
+        android:name="hu.bme.aut.stufftracker.fragment.AddressManagerFragment"
+        android:label="fragment_address_manager"
+        tools:layout="@layout/fragment_address_manager" >
+        <action
+            android:id="@+id/addressManager_to_mainStuff"
+            app:destination="@id/mainStuffFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryManagerFragment"
+        android:name="hu.bme.aut.stufftracker.fragment.CategoryManagerFragment"
+        android:label="fragment_category_manager"
+        tools:layout="@layout/fragment_category_manager" >
+        <action
+            android:id="@+id/categoryManager_to_mainStuff"
+            app:destination="@id/mainStuffFragment" />
+    </fragment>
+</navigation>

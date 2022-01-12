@@ -5,17 +5,13 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import hu.bme.aut.stufftracker.R
 import hu.bme.aut.stufftracker.activity.MainActivity
 import hu.bme.aut.stufftracker.adapter.AddressSpinnerAdapter
-import hu.bme.aut.stufftracker.adapter.CategorySpinnerAdapter
 import hu.bme.aut.stufftracker.data.StuffDatabase
 import hu.bme.aut.stufftracker.databinding.ChangeAddressDialogBinding
-import hu.bme.aut.stufftracker.databinding.NewAddressDialogBinding
-import hu.bme.aut.stufftracker.domain.Category
 import hu.bme.aut.stufftracker.domain.MyAddress
 import hu.bme.aut.stufftracker.domain.Stuff
 import kotlin.concurrent.thread
@@ -47,7 +43,6 @@ class ChangeAddressDialog(var existingAddress: MyAddress, var stuff: Stuff, var 
                 (mContext as MainActivity).runOnUiThread{
                     listener.onAddressChanged(stuff)
                 }
-                db.close()
             }
         }
         builder.setNegativeButton("MÉGSE", null)
@@ -63,7 +58,6 @@ class ChangeAddressDialog(var existingAddress: MyAddress, var stuff: Stuff, var 
                     binding.noAddressTv.visibility = View.GONE
                 }
             }
-            db.close()
         }
         builder.setView(binding.root)
         return builder.create()

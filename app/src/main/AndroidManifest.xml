@@ -10,12 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StuffStracker">
         <activity
-            android:name=".activity.CategoryManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.AddressManagerActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.MainActivity"
             android:exported="false" />
         <activity

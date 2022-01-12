@@ -18,12 +18,30 @@ abstract class StuffDatabase : RoomDatabase() {
     abstract fun stuffDAO(): StuffDAO
 
     companion object {
+
+        @Volatile
+        private var dbInstance: StuffDatabase? = null
+
+        @JvmStatic
         fun getDatabase(applicationContext: Context): StuffDatabase {
-            return Room.databaseBuilder(
-                applicationContext,
-                StuffDatabase::class.java,
-                "stuff-db"
-            ).build();
+            val localInstance = dbInstance
+
+            if (localInstance != null) {
+                return localInstance
+            }
+
+            return return synchronized(this) {
+                var instance = dbInstance
+                if(instance == null){
+                    instance = Room.databaseBuilder(
+                        applicationContext,
+                        StuffDatabase::class.java,
+                        "stuff-db"
+                    ).build()
+                    dbInstance = instance
+                }
+                instance
+            }
         }
     }
 }

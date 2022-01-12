@@ -1,11 +1,8 @@
 package hu.bme.aut.stufftracker.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,14 +22,14 @@ class AddressListAdapter(private val listener: AddressItemListener, private val 
         holder.binding.addressTv.text = "${adr.zipCode} ${adr.city}, ${adr.country}, ${adr.street} ${adr.streetNum}"
         holder.binding.aliasTv.text = adr.alias
         holder.binding.btnEditAddress.setOnClickListener {
-            var dialog = NewAddressDialog(adr)
+            var dialog = NewAddressDialog(adr, this)
             dialog.show(fragmentManager, "NEWADDRESS_DIALOG")
         }
         holder.binding.btnDeleteAddress.setOnClickListener {
             var confirmDeleteDialog = AlertDialog.Builder(listener as Context)
             confirmDeleteDialog.setTitle("A lakcím törlésével a benne lévő dolgok is törlődnek. Biztosan törli?");
             confirmDeleteDialog.setPositiveButton("Törlés"){_,_->
-                listener.onItemDeleted(adr)
+                listener.onAddressDeleted(adr, this)
             }
             confirmDeleteDialog.setNegativeButton("Mégsem", null)
             confirmDeleteDialog.create().show()
@@ -59,7 +56,7 @@ class AddressListAdapter(private val listener: AddressItemListener, private val 
     }
 
     interface AddressItemListener{
-        fun onItemDeleted(item: MyAddress)
+        fun onAddressDeleted(item: MyAddress, addressListAdapter: AddressListAdapter)
     }
 
     inner class AddressViewHolder(val binding: AddressItemBinding) :RecyclerView.ViewHolder(binding.root)

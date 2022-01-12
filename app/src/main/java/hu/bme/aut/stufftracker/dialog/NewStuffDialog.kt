@@ -16,7 +16,11 @@ import hu.bme.aut.stufftracker.domain.MyAddress
 import hu.bme.aut.stufftracker.domain.Stuff
 import java.lang.Integer.parseInt
 import kotlin.concurrent.thread
-//TODO fix item torles utan uj felvetelekor a kep attoltodik vmiert??
+
+/**
+  * TODO item torles utan uj felvetelekor a kep attoltodik vmiert??
+  * gecire megfoghatatlan hiba amúgy... talán a DB átalakítás megoldja?
+  */
 class NewStuffDialog(var address: MyAddress, var existingStuff: Stuff?, var listener: NewStuffDialogListener): DialogFragment() {
     private lateinit var binding: NewStuffDialogBinding
     private lateinit var db: StuffDatabase
@@ -88,7 +92,6 @@ class NewStuffDialog(var address: MyAddress, var existingStuff: Stuff?, var list
                     }
                 }
             }
-            db.close()
         }
         builder.setView(binding.root)
         return builder.create()

@@ -6,17 +6,17 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import hu.bme.aut.stufftracker.adapter.CategoryListAdapter
 import hu.bme.aut.stufftracker.databinding.NewCategoryDialogBinding
 import hu.bme.aut.stufftracker.domain.Category
-import hu.bme.aut.stufftracker.domain.MyAddress
 
-class NewCategoryDialog(var existingCategory: Category?): DialogFragment() {
-    private lateinit var listener: NewCategoryDialog.NewCategoryDialogListener
+class NewCategoryDialog(var existingCategory: Category?, private var categoryListAdapter: CategoryListAdapter): DialogFragment() {
+    private lateinit var listener: NewCategoryDialogListener
     private lateinit var binding: NewCategoryDialogBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = context as? NewCategoryDialog.NewCategoryDialogListener
+        listener = context as? NewCategoryDialogListener
             ?: throw RuntimeException("Activity must implement the NewCategoryDialogListener interface!")
     }
 
@@ -31,9 +31,9 @@ class NewCategoryDialog(var existingCategory: Category?): DialogFragment() {
         builder.setPositiveButton("MENTÉS") {_,_ ->
             if(isValid()){
                 if(existingCategory == null) {
-                    listener.onCategoryCreated(getCategory())
+                    listener.onCategoryCreated(getCategory(), categoryListAdapter)
                 } else {
-                    listener.onCategoryModified(modifyCategory())
+                    listener.onCategoryModified(modifyCategory(), categoryListAdapter)
                 }
             } else {
                 Toast.makeText(requireContext(), "Kérlek írj be egy érvényes kategórianevet!", Toast.LENGTH_LONG).show()
@@ -56,7 +56,7 @@ class NewCategoryDialog(var existingCategory: Category?): DialogFragment() {
     }
 
     interface NewCategoryDialogListener{
-        fun onCategoryCreated(newItem: Category)
-        fun onCategoryModified(newItem: Category)
+        fun onCategoryCreated(newItem: Category, categoryListAdapter: CategoryListAdapter?)
+        fun onCategoryModified(newItem: Category, categoryListAdapter: CategoryListAdapter?)
     }
 }

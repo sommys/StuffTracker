@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AddressManagerActivity">
+    tools:context=".fragment.CategoryManagerFragment">
 
     <TextView
-        android:id="@+id/addressManagerLabel"
+        android:id="@+id/categoryManagerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/addresses"
+        android:text="@string/categories"
         android:textStyle="bold"
         android:textSize="30sp"
         android:layout_marginTop="16dp"
@@ -19,15 +19,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/addressRv"
+        android:id="@+id/categoriesRv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/addressManagerLabel"
+        app:layout_constraintTop_toBottomOf="@id/categoryManagerLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddAddress"
+        android:id="@+id/fabAddCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +37,7 @@
         app:srcCompat="@drawable/ic_baseline_add_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSaveAddresses"
+        android:id="@+id/fabSaveCategories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,4 +45,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="24dp"
         app:srcCompat="@drawable/ic_baseline_done_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.DialogFragment
+import hu.bme.aut.stufftracker.adapter.AddressListAdapter
 import hu.bme.aut.stufftracker.databinding.NewAddressDialogBinding
 import hu.bme.aut.stufftracker.domain.MyAddress
 import java.lang.Integer.parseInt
-import java.util.*
 
-class NewAddressDialog(var existingAddress: MyAddress?): DialogFragment() {
+class NewAddressDialog(var existingAddress: MyAddress?, private var addressListAdapter: AddressListAdapter): DialogFragment() {
     private lateinit var listener: NewAddressDialogListener
     private lateinit var binding: NewAddressDialogBinding
 
@@ -38,9 +38,9 @@ class NewAddressDialog(var existingAddress: MyAddress?): DialogFragment() {
         builder.setPositiveButton("MENTÉS") {_,_ ->
             if(isValid()){
                 if(existingAddress == null) {
-                    listener.onAddressCreated(getAddress())
+                    listener.onAddressCreated(getAddress(), addressListAdapter)
                 } else {
-                    listener.onAddressModified(modifyAddress())
+                    listener.onAddressModified(modifyAddress(), addressListAdapter)
                 }
             } else {
                 Toast.makeText(requireContext(), "Kérlek töltsd ki helyesen a cím adatokat!", Toast.LENGTH_LONG).show()
@@ -79,7 +79,7 @@ class NewAddressDialog(var existingAddress: MyAddress?): DialogFragment() {
     }
 
     interface NewAddressDialogListener{
-        fun onAddressCreated(newItem: MyAddress)
-        fun onAddressModified(newItem: MyAddress)
+        fun onAddressCreated(newItem: MyAddress, addressListAdapter: AddressListAdapter?)
+        fun onAddressModified(newItem: MyAddress, addressListAdapter: AddressListAdapter?)
     }
 }
