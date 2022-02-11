@@ -30,19 +30,19 @@ class MainStuffFragment: Fragment() {
         db = StuffDatabase.getDatabase(requireContext())
         thread{
             val addrList = db.myAddressDAO().getAll()
-            if(addrList.isEmpty()){
-                binding.addressPager.visibility = View.GONE
-                binding.emptyAddressListTv.visibility = View.VISIBLE
-            } else {
-                binding.emptyAddressListTv.visibility = View.GONE
-                binding.addressPager.visibility = View.VISIBLE
-                for(a in addrList){
-                    var f = AddressFragment(a, requireContext(), requireActivity() as MainActivity)
-                    addressPagerAdapter!!.addFragment(f)
+            requireActivity().runOnUiThread {
+                if(addrList.isEmpty()){
+                    binding.addressPager.visibility = View.GONE
+                    binding.emptyAddressListTv.visibility = View.VISIBLE
+                } else {
+                    binding.emptyAddressListTv.visibility = View.GONE
+                    binding.addressPager.visibility = View.VISIBLE
+                    for(a in addrList){
+                        var f = AddressFragment(a, requireContext(), requireActivity() as MainActivity)
+                        addressPagerAdapter!!.addFragment(f)
+                    }
                 }
-                requireActivity().runOnUiThread {
-                    binding.addressPager.adapter = addressPagerAdapter
-                }
+                binding.addressPager.adapter = addressPagerAdapter
             }
         }
     }

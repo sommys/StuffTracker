@@ -1,17 +1,18 @@
 package hu.bme.aut.stufftracker.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
@@ -30,30 +31,24 @@ import hu.bme.aut.stufftracker.domain.MyAddress
 import hu.bme.aut.stufftracker.domain.Stuff
 import hu.bme.aut.stufftracker.fragment.AddressFragment
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
 
-/**
- * TODO all around DB kezeles atgondolasa + javitasa
- * Csak a main activity fogja nyitni és zárni a db-t, a fragmentek megkapják paraméterként
- * NavGraph-al fogjuk megoldani a fregmensek kezelését, a Main Activityben csak egy fragment tartó lesz
- * Alapból a mostani Main Activity lesz benne, ami gyakorlatilag csak egy ViewPager
- * Maradnak a settings menüben a menedzselések, az ottani menüpontok fogják a fragment tranzakciókat kezelni
- * PIN változtatás marad dialógus
- * Address és Category management is átkerül egy sima fragmentbe
- */
 class MainActivity : AppCompatActivity(),
     AddressListAdapter.AddressItemListener,
     CategoryListAdapter.CategoryItemListener,
     NewAddressDialog.NewAddressDialogListener,
     NewCategoryDialog.NewCategoryDialogListener{
+    companion object{
+        private const val REQUEST_CAMERA_IMAGE = 101
+    }
     private lateinit var binding: ActivityMainBinding
     private lateinit var addressPagerAdapter: AddressPagerAdapter
     private lateinit var navController: NavController
     private lateinit var db : StuffDatabase
-    private val REQUEST_IMAGE_CAPTURE = 1
     private var latestHolder: StuffListAdapter.StuffViewHolder? = null
     private var latestStuff: Stuff? = null
     private lateinit var currentPhotoPath: String
@@ -103,51 +98,70 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    @SuppressLint("MissingSuperCall")
+    @SuppressLint("SimpleDateFormat")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            if(latestStuff!!.imageURL != null){
-                val oldFile = File(latestStuff!!.imageURL!!)
-                if(oldFile.exists()) { oldFile.delete() }
-            }
-            latestStuff!!.imageURL = currentPhotoPath
-            thread{
-                db.stuffDAO().update(latestStuff!!)
-                runOnUiThread{
-                    Glide.with(this).load(currentPhotoPath).centerCrop().into(latestHolder!!.binding.img)
-                    latestHolder!!.binding.img.visibility = View.VISIBLE
-                    latestHolder!!.binding.btnAddImage.visibility = View.GONE
+        if(requestCode == REQUEST_CAMERA_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val img = data!!.extras!!["data"] as Bitmap
+                Log.d("IMG_BYTECOUNT", img.allocationByteCount.toString())
+                if (img.allocationByteCount > 4 * 1024 * 1024) {
+                    Toast.makeText(this, "Image size too big! [Maximum Size: 4MB]", Toast.LENGTH_SHORT).show()
+                    return
                 }
+                try {
+                    //uj kep mentese fajlba
+                    val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                    val fileName = "${latestStuff!!.name?.replace("\\s".toRegex(),"_")}_${timeStamp}"
+
+                    try{
+                        val path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "stuffTracker")
+                        val file = File.createTempFile(fileName, ".jpg", path)
+                        file.mkdirs()
+                        val out = FileOutputStream(file)
+                        img.compress(Bitmap.CompressFormat.PNG, 100, out)
+                        currentPhotoPath = file.absolutePath
+                    } catch(e : Exception){
+                        Toast.makeText(this, "Hiba a kép mentésekor... ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+
+                    //regi kep torlese
+                    if(latestStuff!!.imageURL != null){
+                        val oldFile = File(latestStuff!!.imageURL!!)
+                        if(oldFile.exists()) { oldFile.delete() }
+                    }
+
+                    //uj kep url beallitasa, megjelenitese, cucc mentese
+                    latestStuff!!.imageURL = currentPhotoPath
+                    thread{
+                        db.stuffDAO().update(latestStuff!!)
+                        runOnUiThread{
+                            Glide.with(this).load(currentPhotoPath).centerCrop().into(latestHolder!!.binding.img)
+                            latestHolder!!.binding.img.visibility = View.VISIBLE
+                            latestHolder!!.binding.btnAddImage.visibility = View.GONE
+                        }
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+
             }
         }
     }
 
     /**
-     * TODO képkezelés átalakítása
-     * 1. kepmeret csokkentese
-     * 2. kep mashova mentese (konnyebben elerheto helyre)
-     * 3. jobb kep nevek (stuff.name+timestamp.jpg?)
-     * 4. startActivityForResult lecserelese korszerubb technologiara (???)
+     * TODO képkezelés átalakítása 2.0:
+     *  1. engedelykezeles bevezetese
+     *  2. meglevo kep valasztas lehetosege
+     *  3. startActivityForResult lecserelese korszerubb technologiara (???)
      */
     fun takePicture(holder: StuffListAdapter.StuffViewHolder, s: Stuff) {
         latestHolder = holder
         latestStuff = s
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
 
-        try {
-            val photoFile: File? = File.createTempFile("JPEG_${timeStamp}_", ".jpg", storageDir)
-                .apply { currentPhotoPath = absolutePath }
-            photoFile?.also{
-                val photoURI: Uri = FileProvider.getUriForFile(this, applicationContext.packageName+".provider", photoFile)
-                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-            }
-        } catch(e: IOException){
-            e.printStackTrace()
-        }
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, REQUEST_CAMERA_IMAGE)
     }
 
     override fun onAddressDeleted(item: MyAddress, addressListAdapter: AddressListAdapter) {

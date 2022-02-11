@@ -19,7 +19,7 @@ import kotlin.concurrent.thread
 
 /**
   * TODO item torles utan uj felvetelekor a kep attoltodik vmiert??
-  * gecire megfoghatatlan hiba amúgy... talán a DB átalakítás megoldja?
+  *     megfoghatatlan hiba amúgy... talán a DB átalakítás megoldja?
   */
 class NewStuffDialog(var address: MyAddress, var existingStuff: Stuff?, var listener: NewStuffDialogListener): DialogFragment() {
     private lateinit var binding: NewStuffDialogBinding
