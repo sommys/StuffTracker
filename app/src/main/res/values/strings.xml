@@ -28,4 +28,8 @@
     <string name="reminder">Emlékeztető:</string>
     <string name="reminderDialogTitle">PIN Emlékeztető</string>
     <string name="no_address_stored">Nincsen cím rögzítve...</string>
+    <string name="permission_extstorage_rationale">A képek mentéséhez szükségem van a fájlok kezelésével kapcsolatos engedélyhez! Megkaphatom?</string>
+    <string name="camera">KAMERA</string>
+    <string name="gallery">GALÉRIA</string>
+    <string name="uploadPictureDialogMessage">Kérlek válassz módot a kép hozzáadásához!</string>
 </resources>

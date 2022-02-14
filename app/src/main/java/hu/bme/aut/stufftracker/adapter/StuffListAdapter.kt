@@ -11,6 +11,7 @@ import hu.bme.aut.stufftracker.databinding.StuffItemBinding
 import hu.bme.aut.stufftracker.dialog.ChangeAddressDialog
 import hu.bme.aut.stufftracker.dialog.DeleteConfirmDialog
 import hu.bme.aut.stufftracker.dialog.NewStuffDialog
+import hu.bme.aut.stufftracker.dialog.UpdatePictureDialog
 import hu.bme.aut.stufftracker.domain.MyAddress
 import hu.bme.aut.stufftracker.domain.Stuff
 import java.io.File
@@ -41,10 +42,10 @@ class StuffListAdapter(private val address: MyAddress, private val listener: Stu
             dialog.show(fragmentManager, "DELETECONFIRM_DIALOG")
         }
         holder.binding.btnAddImage.setOnClickListener {
-            activity.takePicture(holder, s)
+            UpdatePictureDialog(activity, holder, s).show(activity.supportFragmentManager, "UPDATE_PICTURE_DIALOG")
         }
         holder.binding.img.setOnClickListener {
-            activity.takePicture(holder, s)
+            UpdatePictureDialog(activity, holder, s).show(activity.supportFragmentManager, "UPDATE_PICTURE_DIALOG")
         }
         holder.binding.btnChangeAddress.setOnClickListener {
             val dialog = ChangeAddressDialog(address, s, this)
@@ -67,6 +68,12 @@ class StuffListAdapter(private val address: MyAddress, private val listener: Stu
     }
 
     fun deleteItem(item: Stuff){
+        if(item.imageURL != null){
+            val oldFile = File(item.imageURL!!)
+            if (oldFile.exists()) {
+                oldFile.delete()
+            }
+        }
         val pos = stuffList.indexOf(item)
         if(pos != -1) {
             stuffList.remove(item)

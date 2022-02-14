@@ -117,11 +117,6 @@ class AddressFragment(var address : MyAddress, var mContext: Context, var activi
             db.stuffDAO().deleteItem(item)
             activity.runOnUiThread {
                 stuffListAdapter.deleteItem(item)
-                /**
-                 * todo törléskor kép fizikai törlése is, ne maradjon ott szemét
-                 *  esetleg futhatna leálláskor egy takarító algoritmus, ami a nem használt képeket kigyepálja
-                 *  ezzel megelőzhető lenne a véletlen felvett és nem rögzített szemetek elszaporodása is
-                 */
             }
         }
     }
